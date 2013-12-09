@@ -19,13 +19,15 @@ module.exports = function(grunt) {
     	var options = this.options({
 		dest: false,
 		keywords: false,
+		language: false,
+		from_code: false,
 		text_domain: 'messages',
 		package_version: pkg.version,
 		package_name: pkg.name,
 		msgid_bugs_address: false,
 		omit_header: false,
 		copyright_holder: false,
-		comment_tag: '/',
+		comment_tag: '/'
 	});
 
 	grunt.verbose.writeflags(options, 'Pot options');
@@ -41,6 +43,12 @@ module.exports = function(grunt) {
 
 	//Implode keywards
 	var keywords = ( options.keywords ? " --keyword=" + options.keywords.join( " --keyword=" ) : "" );
+
+	// Set input files language, if specified
+	var language = ( options.language ? " --language="+options.language : "" );
+
+	// Set input files encoding, if required
+	var encoding = ( options.from_code ? " --from-code="+options.from_code : "" );
 
 	//Generate header
 	if( options.package_version ){
@@ -67,15 +75,14 @@ module.exports = function(grunt) {
 		headerOptions += " --add-comments='"+options.comment_tag+"'";
 	}
 
-
 	//Generate list of files to scan
 	this.files.forEach(function(file) {
 		inputFiles +=  " " + file.src[0];
 	});
 
-	//Compile and run command	
+	//Compile and run command
 	var exec = require('child_process').exec;
-	var command = 'xgettext --default-domain=' + options.text_domain + ' -o '+options.dest + keywords + headerOptions + inputFiles;
+	var command = 'xgettext --default-domain=' + options.text_domain + ' -o '+options.dest + language + encoding + keywords + headerOptions + inputFiles;
 
 	grunt.verbose.writeln('Executing: ' + command);
 	exec(command);
@@ -90,4 +97,3 @@ module.exports = function(grunt) {
   };
 
 };
-
