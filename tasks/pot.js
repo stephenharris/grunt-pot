@@ -16,8 +16,9 @@ module.exports = function(grunt) {
 
 	var pkg = grunt.file.readJSON('package.json');
 
-    	var options = this.options({
+    var options = this.options({
 		dest: false,
+		join: false,
 		keywords: false,
 		language: false,
 		from_code: false,
@@ -37,17 +38,22 @@ module.exports = function(grunt) {
 		options.dest = options.dest.replace(/\/$/, "") + "/"+options.text_domain+".pot";
         }
 
-	grunt.file.write(options.dest);
+	if( !grunt.file.exists(options.dest) ){
+        grunt.file.write(options.dest);
+    }
 
 	grunt.log.writeln('Destination: ' + options.dest);
+
+	//Set join mode
+	var join = ( options.join ? " --join-existing" : "" );
 
 	//Implode keywards
 	var keywords = ( options.keywords ? " --keyword=" + options.keywords.join( " --keyword=" ) : "" );
 
-	// Set input files language, if specified
+	//Set input files language, if specified
 	var language = ( options.language ? " --language="+options.language : "" );
 
-	// Set input files encoding, if required
+	//Set input files encoding, if required
 	var encoding = ( options.from_code ? " --from-code="+options.from_code : "" );
 
 	//Generate header
@@ -82,7 +88,7 @@ module.exports = function(grunt) {
 
 	//Compile and run command
 	var exec = require('child_process').exec;
-	var command = 'xgettext --default-domain=' + options.text_domain + ' -o '+options.dest + language + encoding + keywords + headerOptions + inputFiles;
+	var command = 'xgettext' + join + ' --default-domain=' + options.text_domain + ' -o '+options.dest + language + encoding + keywords + headerOptions + inputFiles;
 
 	grunt.verbose.writeln('Executing: ' + command);
 	exec(command);
