@@ -53,7 +53,7 @@ Either a path to a folder (with trailing slash) for the generated `.pot` to be p
 Type: `Bool`
 Default value: True
 
-When true, append to pre-existing `.pot` file, rather than overwriting it.
+When false, append to pre-existing `.pot` file, rather than overwriting it.
 
 #### keywords
 Type: `Array`
