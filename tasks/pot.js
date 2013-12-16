@@ -18,7 +18,7 @@ module.exports = function(grunt) {
 
     var options = this.options({
 		dest: false,
-		join: false,
+		overwrite: true,
 		keywords: false,
 		language: false,
 		from_code: false,
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
 	grunt.log.writeln('Destination: ' + options.dest);
 
 	//Set join mode
-	var join = ( options.join ? " --join-existing" : "" );
+	var join = ( !options.overwrite ? " --join-existing" : "" );
 
 	//Implode keywards
 	var keywords = ( options.keywords ? " --keyword=" + options.keywords.join( " --keyword=" ) : "" );
