@@ -1,7 +1,7 @@
 {
   "name": "grunt-pot",
   "description": "Scan files and creates a .pot file using xgettext",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "homepage": "https://github.com/stephenharris/grunt-pot",
   "author": {
     "name": "Stephen Harris",

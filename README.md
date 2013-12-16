@@ -49,6 +49,12 @@ Default value: False
 
 Either a path to a folder (with trailing slash) for the generated `.pot` to be placed or a file path. When using a folder, the filename is generated using the text domain.
 
+#### overwrite
+Type: `Bool`
+Default value: True
+
+When true, append to pre-existing `.pot` file, rather than overwriting it.
+
 #### keywords
 Type: `Array`
 Default value: (none)
