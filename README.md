@@ -55,6 +55,21 @@ Default value: True
 
 When false, append to pre-existing `.pot` file, rather than overwriting it.
 
+#### encoding
+Type `String`|`Bool`
+Default value: False.
+
+Specifies the encoding of the input files. E.g. "ASCII" or "UTF-8". This option is needed only if some untranslated message strings or their corresponding comments contain non-ASCII characters. This option maps to `xgettext`'s `--from-code` command line option. False (default value) does not specify an encoding, by default, `xgettext` will interpret input files as ASCII. Note that Tcl and Glade input files are always assumed to be in UTF-8, regardless of this option.
+
+### language
+Type `String`|`Bool`
+Default value: False.
+
+Specifies the language of the input files. The supported languages are C, C++, ObjectiveC, PO, Shell, Python, Lisp, EmacsLisp, librep, Scheme, Smalltalk, Java, JavaProperties, C#, awk, YCP, Tcl, Perl, PHP, GCC-source, NXStringTable, RST, Glade.
+
+By default `xgettext` guesses the language based on the input file name extension.
+
+
 #### keywords
 Type: `Array`
 Default value: (none)
