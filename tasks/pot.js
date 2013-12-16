@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 		overwrite: true,
 		keywords: false,
 		language: false,
-		from_code: false,
+		encoding: false,
 		text_domain: 'messages',
 		package_version: pkg.version,
 		package_name: pkg.name,
@@ -54,7 +54,7 @@ module.exports = function(grunt) {
 	var language = ( options.language ? " --language="+options.language : "" );
 
 	//Set input files encoding, if required
-	var encoding = ( options.from_code ? " --from-code="+options.from_code : "" );
+	var encoding = ( options.encoding ? " --from-code="+options.encoding : "" );
 
 	//Generate header
 	if( options.package_version ){
