@@ -167,5 +167,6 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+* *0.1.2* - Pass error messages from `exec` to Grunt.
 * *0.1.1* - Added `language`, `encoding` and `overwrite` option. Thanks to @robinnorth.
 * *0.1.0* - Initial release
