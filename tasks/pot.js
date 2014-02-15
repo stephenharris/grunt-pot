@@ -89,9 +89,17 @@ module.exports = function(grunt) {
 	//Compile and run command
 	var exec = require('child_process').exec;
 	var command = 'xgettext' + join + ' --default-domain=' + options.text_domain + ' -o '+options.dest + language + encoding + keywords + headerOptions + inputFiles;
-
+	var done = grunt.task.current.async(); 
+	
 	grunt.verbose.writeln('Executing: ' + command);
-	exec(command);
+	
+	exec( command, 
+		function(error, stdout, stderr){
+			grunt.verbose.writeln('stderr: ' + stderr);
+			done(error); //error will be null if command executed without errors. 
+		}
+  	);
+	
   });
 
   var detectDestType = function(dest) {
