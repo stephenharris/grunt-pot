@@ -33,16 +33,17 @@ module.exports = function(grunt) {
 
 	grunt.verbose.writeflags(options, 'Pot options');
 
+	var potFile = options.dest;
 	//If destination is a directory, build a file based on text domain
 	if( options.dest && detectDestType(options.dest) === 'directory' ) {
-		options.dest = options.dest.replace(/\/$/, "") + "/"+options.text_domain+".pot";
+		potFile = options.dest.replace(/\/$/, "") + "/"+options.text_domain+".pot";
         }
 
-	if( !grunt.file.exists(options.dest) ){
-        grunt.file.write(options.dest);
-    }
+	if( !grunt.file.exists(potFile) ){
+		grunt.file.write(potFile);
+	}
 
-	grunt.log.writeln('Destination: ' + options.dest);
+	grunt.log.writeln('Destination: ' + potFile);
 
 	//Set join mode
 	var join = ( !options.overwrite ? " --join-existing" : "" );
@@ -88,7 +89,7 @@ module.exports = function(grunt) {
 
 	//Compile and run command
 	var exec = require('child_process').exec;
-	var command = 'xgettext' + join + ' --default-domain=' + options.text_domain + ' -o '+options.dest + language + encoding + keywords + headerOptions + inputFiles;
+	var command = 'xgettext' + join + ' --default-domain=' + options.text_domain + ' -o '+potFile + language + encoding + keywords + headerOptions + inputFiles;
 	var done = grunt.task.current.async(); 
 	
 	grunt.verbose.writeln('Executing: ' + command);
