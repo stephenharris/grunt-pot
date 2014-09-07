@@ -13,7 +13,7 @@ exports.pot = {
     var expected = grunt.file.read('test/expected/my-text-domain.pot');
 
     //Deal with the fact that actual will contain the timestamp of when the test is run
-    expected = expected.replace( "YYYY-MM-DD HH:MM+ZZZZ", getTimestamp()+"+0000" );
+    expected = expected.replace( "YYYY-MM-DD HH:MM+ZZZZ", getTimestamp() );
 
     test.equal(actual, expected);
 
@@ -21,15 +21,34 @@ exports.pot = {
   },
 };
 
+/**
+  * This handy function has been cannibalised phpjs's date function
+  * @see http://phpjs.org/functions/date/ 
+  * @license MIT
+  * Copyright (c) 2013 Kevin van Zonneveld (http://kvz.io) and Contributors (http://phpjs.org/authors)
+ */
 var getTimestamp = function() {
-    var date = new Date(); 
+   var date = new Date(); 
+   
+   var _pad = function(n, c) {
+     n = String(n);
+     while (n.length < c) {
+       n = '0' + n;
+     }
+     return n;
+   }
+
    var yyyy = date.getFullYear().toString();
-   var mm = (date.getMonth()+1).toString(); // getMonth() is zero-based
-   var dd  = date.getDate().toString();
+   var mm  = (date.getMonth()+1).toString(); // getMonth() is zero-based
+   var dd     = date.getDate().toString();
 
   var hh = date.getHours().toString();
-  var ii = date.getMinutes().toString();
+  var ii    = date.getMinutes().toString();
 
-   return yyyy + "-"+ (mm[1]?mm:"0"+mm[0])+ "-" + ( dd[1] ? dd :"0"+dd[0] ) + " " + ( hh[1] ? hh :"0"+hh[0] ) + ":" + ( ii[1] ? ii :"0"+ii[0] ); // padding
+   var tzOffset          = date.getTimezoneOffset();
+   var absTzOffset = Math.abs( tzOffset );
+   var tzString           = ( tzOffset > 0 ? '-' : '+') + _pad(Math.floor( absTzOffset/60) * 100 +  absTzOffset%60, 4);   
+
+   return yyyy + "-"+ _pad( mm, 2 ) + "-" + _pad( dd, 2 ) + " " +_pad( hh, 2 ) + ":" + _pad( ii, 2 ) + tzString; // padding
   };
 
