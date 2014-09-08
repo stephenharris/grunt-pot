@@ -100,14 +100,15 @@ module.exports = function(grunt) {
 
 			grunt.verbose.writeln('stderr: ' + stderr);
 
-			//If msmerge-ing then assume .po files are in same location has .pot
-			var poFiles = options.dest.replace(/\/$/, "") + "/*.po";
-
-			var poFilePaths = grunt.file.expand( poFiles );
-
 			if( options.msgmerge ){
+
+				//If msmerge-ing then use specified directory or assume .po files are in same location has .pot
+				var poFiles = ( options.msgmerge === true ? options.dest.replace(/\/$/, "") + "/*.po" : options.msgmerge.replace(/\/$/, "") + "/*.po" );
+				var poFilePaths = grunt.file.expand( poFiles );
+
 				var count = poFilePaths ? poFilePaths.length : 0;
 				grunt.verbose.writeln( count + " .po files found for msgmerge" );
+
 			}
 
 			if( poFilePaths && options.msgmerge ){
