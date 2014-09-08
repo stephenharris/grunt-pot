@@ -28,7 +28,8 @@ module.exports = function(grunt) {
 		msgid_bugs_address: false,
 		omit_header: false,
 		copyright_holder: false,
-		comment_tag: '/'
+		comment_tag: '/',
+		msgmerge: false,
 	});
 
 	grunt.verbose.writeflags(options, 'Pot options');
@@ -96,8 +97,28 @@ module.exports = function(grunt) {
 	
 	exec( command, 
 		function(error, stdout, stderr){
+
 			grunt.verbose.writeln('stderr: ' + stderr);
-			done(error); //error will be null if command executed without errors. 
+
+			//If msmerge-ing then assume .po files are in same location has .pot
+			var poFiles = options.dest.replace(/\/$/, "") + "/*.po";
+
+			var poFilePaths = grunt.file.expand( poFiles );
+
+			if( options.msgmerge ){
+				var count = poFilePaths ? poFilePaths.length : 0;
+				grunt.verbose.writeln( count + " .po files found for msgmerge" );
+			}
+
+			if( poFilePaths && options.msgmerge ){
+
+				poFilePaths.forEach( function( poFile ) {
+					exec( 'msgmerge -U ' + poFile +' ' + potFile, function(error, stdout, stderr) {});
+				});
+
+			}
+
+			done( error ); //error will be null if command executed without errors. 
 		}
   	);
 	

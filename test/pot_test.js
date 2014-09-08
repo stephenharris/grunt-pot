@@ -19,6 +19,18 @@ exports.pot = {
 
     test.done();
   },
+
+    msgmerge: function(test) {
+	test.expect(1);
+
+	var actual        = grunt.file.read('tmp/msgmerge-po.po');
+	var expected = grunt.file.read('test/expected/msgmerge-po-updated.po');
+	expected = expected.replace( "YYYY-MM-DD HH:MM+ZZZZ", getTimestamp() );
+
+	test.equal(actual, expected);
+
+	test.done();
+  },
 };
 
 /**
