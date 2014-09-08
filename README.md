@@ -127,6 +127,15 @@ Comments immediately above a listed keyword which begin with this tag will be in
 echo gettext("yyyy-mm-dd");
 ```
 
+#### msgmerge
+Type: `Bool|String`
+Default value: `false`
+
+After the `.pot` file has been generated, you can [msgmerge](https://www.gnu.org/software/gettext/manual/html_node/msgmerge-Invocation.html) it into existing `.po` files. This updates the `.po` files, preserving the translations (as long as they are still required), but updating extracted comments and file references to those given by the newly generated `.pot` file. Where an exact match cannot be found, fuzzy matching is used to produce better results. In effect this keeps extracted comments and references in the `.po` files 'up to date' with the `.pot` files, while ensuring any minor string changes do not loose their existing translation.
+
+You can enable this by setting `msgmerge` to `true`, in which case the `.po` files are assumed to be in the same directory as the generated `.pot` file. If you wish to specify an alternative directory for the `.po` files you may set this option to that directory path (with trailing slash).
+
+
 ### Usage Examples
 
 ```js
@@ -149,9 +158,10 @@ grunt.initConfig({
 grunt.initConfig({
   pot: {
       options:{
-	  text_domain: 'my-text-domain', //Your text domain. Produces my-text-domain.pot
-	  dest: 'languages/', //directory to place the pot file
-	  keywords: [ 'gettext', 'ngettext:1,2' ], //functions to look for
+	text_domain: 'my-text-domain', //Your text domain. Produces my-text-domain.pot
+	dest: 'languages/', //directory to place the pot file
+	keywords: [ 'gettext', 'ngettext:1,2' ], //functions to look for
+	msgmerge: true
 	},
 	files:{
 	  src:  [ '**/*.php' ], //Parse all php files
