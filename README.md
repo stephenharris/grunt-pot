@@ -176,7 +176,7 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-
+* *0.2.1* - Fixes bug if directories are included in `files`. See [#10](https://github.com/stephenharris/grunt-pot/issues/10)
 * *0.2.0* - Add `msmerge` option.
 * *0.1.2* - Pass error messages from `exec` to Grunt.
 * *0.1.1* - Added `language`, `encoding` and `overwrite` option. Thanks to @robinnorth.
