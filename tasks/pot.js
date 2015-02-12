@@ -85,7 +85,9 @@ module.exports = function(grunt) {
 
 	//Generate list of files to scan
 	this.files.forEach(function(file) {
-		inputFiles +=  " " + file.src[0];
+		if( !grunt.file.isDir( file.src[0] ) ){
+			inputFiles +=  " " + file.src[0];
+		}
 	});
 
 	//Compile and run command
