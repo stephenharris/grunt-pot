@@ -8,6 +8,8 @@
 
 'use strict';
 
+var fs = require('fs');
+
 module.exports = function(grunt) {
 
   grunt.registerMultiTask('pot', 'Scan files and create a .pot file using xgettext', function() {
@@ -35,10 +37,11 @@ module.exports = function(grunt) {
 	grunt.verbose.writeflags(options, 'Pot options');
 
 	var potFile = options.dest;
-	//If destination is a directory, build a file based on text domain
-	if( options.dest && detectDestType(options.dest) === 'directory' ) {
-		potFile = options.dest.replace(/\/$/, "") + "/"+options.text_domain+".pot";
-        }
+
+	// If destination is a directory, build a file based on text domain
+	if( options.dest && fs.lstatSync(options.dest).isDirectory() ){
+		potFile = options.dest.replace(/\/$/, "") + "/" + options.text_domain + ".pot";
+	}
 
 	if( !grunt.file.exists(potFile) ){
 		grunt.file.write(potFile);
@@ -93,11 +96,11 @@ module.exports = function(grunt) {
 	//Compile and run command
 	var exec = require('child_process').exec;
 	var command = 'xgettext' + join + ' --default-domain=' + options.text_domain + ' -o '+potFile + language + encoding + keywords + headerOptions + inputFiles;
-	var done = grunt.task.current.async(); 
-	
+	var done = grunt.task.current.async();
+
 	grunt.verbose.writeln('Executing: ' + command);
-	
-	exec( command, 
+
+	exec( command,
 		function(error, stdout, stderr){
 
 			grunt.verbose.writeln('stderr: ' + stderr);
@@ -121,18 +124,10 @@ module.exports = function(grunt) {
 
 			}
 
-			done( error ); //error will be null if command executed without errors. 
+			done( error ); //error will be null if command executed without errors.
 		}
   	);
-	
-  });
 
-  var detectDestType = function(dest) {
-    if (grunt.util._.endsWith(dest, '/')) {
-      return 'directory';
-    } else {
-      return 'file';
-    }
-  };
+  });
 
 };
