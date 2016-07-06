@@ -23,6 +23,7 @@ module.exports = function(grunt) {
 		language: false,
 		encoding: false,
 		text_domain: 'messages',
+		add_location: false,
 		package_version: pkg.version,
 		package_name: pkg.name,
 		msgid_bugs_address: false,
@@ -57,6 +58,9 @@ module.exports = function(grunt) {
 
 	//Set input files encoding, if required
 	var encoding = ( options.encoding ? " --from-code="+options.encoding : "" );
+	
+	// Set location format (default: full)
+	var add_location = ( options.add_location ? " --add-location="+options.add_location : "" );
 
 	//Generate header
 	if( options.package_version ){
@@ -92,7 +96,7 @@ module.exports = function(grunt) {
 
 	//Compile and run command
 	var exec = require('child_process').exec;
-	var command = 'xgettext' + join + ' --default-domain=' + options.text_domain + ' -o '+potFile + language + encoding + keywords + headerOptions + inputFiles;
+	var command = 'xgettext' + join + ' --default-domain=' + options.text_domain + ' -o '+potFile + language + encoding + keywords + add_location + headerOptions + inputFiles;
 	var done = grunt.task.current.async(); 
 	
 	grunt.verbose.writeln('Executing: ' + command);
