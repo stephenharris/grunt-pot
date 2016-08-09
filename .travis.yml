@@ -8,6 +8,9 @@ node_js:
 
 sudo: false
 
+before_script:
+- mkdir tmp
+
 install:
 - npm install grunt-cli
 - npm install
