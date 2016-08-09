@@ -3,7 +3,7 @@
 > Scan files and creates a .pot file using xgettext.
 
 ## Getting Started
-This plugin requires Grunt `~0.4.1`
+This plugin requires Grunt `>=0.4.0`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
@@ -136,6 +136,13 @@ After the `.pot` file has been generated, you can [msgmerge](https://www.gnu.org
 You can enable this by setting `msgmerge` to `true`, in which case the `.po` files are assumed to be in the same directory as the generated `.pot` file. If you wish to specify an alternative directory for the `.po` files you may set this option to that directory path (with trailing slash).
 
 
+#### add_location
+Type: `Null|String`
+Default value: `null`
+
+Whether (and how) to include the translatable string's location(s). Accepts 'full' (file and line number), 'file' (file name only) or 'never' (no references). When not specified reverts to the default behaviour of 'full'.
+
+
 ### Usage Examples
 
 ```js
@@ -176,6 +183,7 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+* *0.3.0* - Added support for --add-location [#16](https://github.com/stephenharris/grunt-pot/issues/16); Use fs for directory detection [#13](https://github.com/stephenharris/grunt-pot/issues/13). 
 * *0.2.1* - Fixes bug if directories are included in `files`. See [#10](https://github.com/stephenharris/grunt-pot/issues/10)
 * *0.2.0* - Add `msmerge` option.
 * *0.1.2* - Pass error messages from `exec` to Grunt.
