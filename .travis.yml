@@ -8,6 +8,9 @@ node_js:
 
 sudo: false
 
+before_install:
+- xgettext --version
+
 install:
 - npm install grunt-cli
 - npm install
