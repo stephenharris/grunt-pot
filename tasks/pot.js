@@ -33,6 +33,7 @@ module.exports = function(grunt) {
 		copyright_holder: false,
 		comment_tag: '/',
 		msgmerge: false,
+	    	no_fuzzy: false
 	});
 
 	grunt.verbose.writeflags(options, 'Pot options');
@@ -121,9 +122,11 @@ module.exports = function(grunt) {
 			}
 
 			if( poFilePaths && options.msgmerge ){
+                // do not use fuzzy matching
+                var no_fuzzy = ( options.no_fuzzy ? "-N " : "" );
 
 				poFilePaths.forEach( function( poFile ) {
-					exec( 'msgmerge -U ' + poFile +' ' + potFile, function(error, stdout, stderr) {});
+					exec( 'msgmerge -U ' + no_fuzzy + poFile +' ' + potFile, function(error, stdout, stderr) {});
 				});
 
 			}
