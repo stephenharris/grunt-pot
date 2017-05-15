@@ -136,6 +136,13 @@ After the `.pot` file has been generated, you can [msgmerge](https://www.gnu.org
 You can enable this by setting `msgmerge` to `true`, in which case the `.po` files are assumed to be in the same directory as the generated `.pot` file. If you wish to specify an alternative directory for the `.po` files you may set this option to that directory path (with trailing slash).
 
 
+#### no_fuzzy
+Type: `Bool`
+Default value: `false`
+
+Do not use fuzzy matching
+
+
 #### add_location
 Type: `Null|String`
 Default value: `null`
