@@ -61,7 +61,7 @@ Default value: False.
 
 Specifies the encoding of the input files. E.g. "ASCII" or "UTF-8". This option is needed only if some untranslated message strings or their corresponding comments contain non-ASCII characters. This option maps to `xgettext`'s `--from-code` command line option. False (default value) does not specify an encoding, by default, `xgettext` will interpret input files as ASCII. Note that Tcl and Glade input files are always assumed to be in UTF-8, regardless of this option.
 
-### language
+#### language
 Type `String`|`Bool`
 Default value: False.
 
@@ -110,11 +110,18 @@ Default value: (none)
 
 The email (to report bugs to) that appears in the header msgid 
 
+#### copyright_holder
+Type: `String`
+Default value: (none)
+
+The copyright holder name that appears in the header msgid 
+
 #### omit_header
 Type: `Bool`
 Default value: `false`
 
-Whether to omit the header. It is recommended to keep this `false`.
+Whether to omit the header (don't write header with 'msgid ""' entry
+). It is recommended to keep this `false`.
 
 #### comment_tag
 Type: `String`
@@ -165,13 +172,18 @@ grunt.initConfig({
 grunt.initConfig({
   pot: {
       options:{
+        package_name: "\"<%= package.title %>\"",
+	copyright_holder: "ACME Corp.",
 	text_domain: 'my-text-domain', //Your text domain. Produces my-text-domain.pot
 	dest: 'languages/', //directory to place the pot file
 	keywords: [ 'gettext', 'ngettext:1,2' ], //functions to look for
 	msgmerge: true
 	},
 	files:{
-	  src:  [ '**/*.php' ], //Parse all php files
+          src: [
+                "**/*.php", //Parse all php files...
+                "!**/*Test.php" //...except for the unit-tests
+            ],
 	  expand: true,
        }
   },
